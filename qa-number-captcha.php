@@ -98,7 +98,8 @@
 		{
 			try
 			{
-				if (strlen(Numbers_Words::toWords(100)) > 1) {
+				$numWords = new Numbers_Words();
+				if (strlen($numWords->toWords(100)) > 1) {
 					return true;
 				}
 			} catch (Exception $e) {
@@ -111,8 +112,9 @@
 			$label = qa_lang('ncap/please_answer');
 
 	        $myChallengeNumber = rand(0, 899999999) + 100000000;
-		    $myChallengeString = (string)$myChallengeNumber;
-		    $myChallengeStringLong = Numbers_Words::toWords($myChallengeNumber);
+			$myChallengeString = (string)$myChallengeNumber;
+			$numWords = new Numbers_Words();
+		    $myChallengeStringLong = $numWords->toWords($myChallengeNumber);
 		    $myChallengeIndex = rand(0, 8) + 1;
 
 		    $myChallengePositions = array (
@@ -129,7 +131,7 @@
 		    $myChallengePositionName = $myChallengePositions[$myChallengeIndex - 1];
 			
 			$question = (string) "What is the ".$myChallengePositionName." digit of the number <strong>".$myChallengeStringLong."</strong>?";
-			$ans_hidden_field .= '<input type="hidden" value="'.md5(qa_opt(self::SALT).$myChallengeString[$myChallengeIndex - 1]).'" name="'.self::CAPTCHA_HIDDEN_FIELD.'" />'.PHP_EOL ;
+			$ans_hidden_field = '<input type="hidden" value="'.md5(qa_opt(self::SALT).$myChallengeString[$myChallengeIndex - 1]).'" name="'.self::CAPTCHA_HIDDEN_FIELD.'" />'.PHP_EOL ;
 			
 			$html  = '<div class="qa-ncap">
 						<div class="qa-ncap-label">'.$label.'</div>			
